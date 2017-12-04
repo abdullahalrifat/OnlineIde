@@ -44,15 +44,23 @@ li {
 
 #compile {
     position: absolute;
+
     right: 10px;
-    left: 10px;
     min-height: 100px;
     min-width: 400px;
-    /*width: 100%;*/
+    width: 48%;
     height: 40%;
     bottom: 0px;
 }
-
+#input {
+    position: absolute;
+    width: 48%;
+    height: 40%;
+    min-height: 100px;
+    min-width: 400px;
+    left: 10px;
+    bottom: 0px;
+}
 #launch-button {
     position: absolute;
     right: 0px;
@@ -79,7 +87,7 @@ li {
     left: 5px;
 }
 
-#text-code, #text-code-ace {
+#text-code,#text-input, #text-code-ace {
     position: absolute;
     top: 50px;
     width: 100%;
@@ -99,6 +107,13 @@ li {
 }
 
 #text-compile {
+    position: absolute;
+    bottom: 0px;
+    left: 5px;
+    width: 98%;
+    height: 80%;
+}
+#text-input {
     position: absolute;
     bottom: 0px;
     left: 5px;

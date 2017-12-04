@@ -11,5 +11,12 @@
 {% endblock %}
 
 {% block comp %}
-<textarea id="text-compile" rows="7" cols="140" readonly>{{ rescomp }}</textarea>
+<textarea id="text-compile" rows="7" cols="70" readonly>{{ rescomp }}</textarea>
+{% endblock %}
+
+{% block input %}
+<textarea id="text-input" name="input" rows={{ rows }} cols={{ cols }}>
+{{ input }}
+</textarea><br/>
+<div id="text-input" class="hidden">{{ input }}</div>
 {% endblock %}

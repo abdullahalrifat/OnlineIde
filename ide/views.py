@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 default_py_code = """import sys
 import os
 if __name__ == "__main__":
-    print "Hello Python World!!"
+    print ("Hello Python World!!")
 """
 
 default_rows = "15"
@@ -39,8 +39,11 @@ class ide(generic.ListView):
 
 
 def runc(request):
+    inputs = ''
     if request.method == 'POST':
         code = request.POST['code']
+        inputs = request.POST['input']
+        print(inputs)
         run = runcode.RunCCode(code)
         rescompil, resrun = run.run_c_code()
         if not resrun:
@@ -49,13 +52,15 @@ def runc(request):
         code = default_c_code
         resrun = 'No result!'
         rescompil = ''
+        inputs=''
     return render(request, 'main.html', {
         "code": code,
         "target": "runc",
         "resrun": resrun,
         "rescomp": rescompil,
         "rows": default_rows,
-        "cols": default_cols
+        "cols": default_cols,
+        "input":inputs
     })
 
 

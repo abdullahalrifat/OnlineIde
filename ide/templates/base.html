@@ -17,18 +17,29 @@
 </div>
 <div id="content">
     <!-- ************  CODING ZONE  ************ -->
-    <div id="code">
-        <form method="post" role="form" >
-        {% csrf_token %}
+
+    <form method="post" role="form" >
+        <div id="code">
+            {% csrf_token %}
             <div id="title-code" class="head-section">
               Source Code
             </div>
             <input id="launch-button" class="head-section" type="submit" value="Launch" />
             {% block code %}
             {% endblock %}
-        </form>
-    </div>
 
+        </div>
+        <div id="input">
+            {% csrf_token %}
+            <div id="title-input" class="head-section">
+                Input
+            </div>
+            {% block input %}
+            {% endblock %}
+
+        </div>
+
+    </form>
     <!-- ************ RUNNING ZONE RESULTS ************ -->
 
     <div id="result">
@@ -48,6 +59,8 @@
         {% block comp %}
         {% endblock %}
     </div>
+
+
 </div>
 <script src="{% static 'ace/ace.js'%}"></script>
 <script>
