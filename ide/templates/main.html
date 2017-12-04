@@ -15,8 +15,6 @@
 {% endblock %}
 
 {% block input %}
-<textarea id="text-input" name="input" rows={{ rows }} cols={{ cols }}>
-{{ input }}
-</textarea><br/>
-<div id="text-input" class="hidden">{{ input }}</div>
+<textarea id="text-input" name="input" rows={{ rows }} cols={{ cols }}>{{input}}</textarea><br/>
+<div id="text-input" class="hidden">{{input}}</div>
 {% endblock %}

@@ -43,7 +43,6 @@ def runc(request):
     if request.method == 'POST':
         code = request.POST['code']
         inputs = request.POST['input']
-        print(inputs)
         run = runcode.RunCCode(code)
         rescompil, resrun = run.run_c_code()
         if not resrun:
