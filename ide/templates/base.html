@@ -1,0 +1,71 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>WebDevTools</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{% static 'devc.css'%}">
+</head>
+<body id="index" class="home">
+<div id="links">
+<ul>
+<li><a href="/ide/runc">C Code</a></li>
+<li><a href="/ide/runcpp">C++ Code</a></li>
+<li><a href="/ide/runpy">Python Code</a></li>
+</ul>
+</div>
+<div id="content">
+    <!-- ************  CODING ZONE  ************ -->
+    <div id="code">
+        <form method="post" role="form" >
+        {% csrf_token %}
+            <div id="title-code" class="head-section">
+              Source Code
+            </div>
+            <input id="launch-button" class="head-section" type="submit" value="Launch" />
+            {% block code %}
+            {% endblock %}
+        </form>
+    </div>
+
+    <!-- ************ RUNNING ZONE RESULTS ************ -->
+
+    <div id="result">
+        <div id="title-result" class="head-section">
+            Output result
+        </div>
+        {% block run %}
+        {% endblock %}
+    </div>
+
+    <!-- ************ COMPILATION RESULTS ZONE ************ -->
+
+    <div id="compile">
+        <div id="title-compile" class="head-section">
+            Compilation / Output
+        </div>
+        {% block comp %}
+        {% endblock %}
+    </div>
+</div>
+<script src="{% static 'ace/ace.js'%}"></script>
+<script>
+    // The Ace editor needs divs instead of textareas
+    // So we hide the textarea and show a div instead
+    var editorElement = document.getElementById("text-code");
+    editorElement.classList.add("hidden");
+    document.getElementById("text-code-ace").classList.remove("hidden");
+    // Set up the editor
+    var editor = ace.edit("text-code-ace");
+    editor.setTheme("ace/theme/tomorrow");
+    var language = ("{{ target }}" === "runpy") ? "python" : "c_cpp";
+    editor.getSession().setMode("ace/mode/" + language);
+    // Make sure we copy the content of the editor to the textarea before posting
+    // its content to the server
+    document.getElementById("launch-button").addEventListener("click", function () {
+        editorElement.innerHTML = editor.getValue();
+    });
+</script>
+</body>
+</html>
