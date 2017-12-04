@@ -65,8 +65,10 @@ def runc(request):
 
 
 def runcpp(request):
+    inputs=''
     if request.method == 'POST':
         code = request.POST['code']
+        inputs = request.POST['input']
         run = runcode.RunCppCode(code)
         rescompil, resrun = run.run_cpp_code()
         if not resrun:
@@ -75,26 +77,31 @@ def runcpp(request):
         code = default_cpp_code
         resrun = 'No result!'
         rescompil = ''
+        inputs=''
     return render(request, 'main.html', {
         "code" :code,
         "target" : "runcpp",
         "resrun" : resrun,
         "rescomp" : rescompil,
         "rows" : default_rows,
-        "cols" :default_cols
+        "cols" :default_cols,
+        "input":inputs
         })
 
 
 
 def runpy(request):
+    inputs=''
     if request.method == 'POST':
         code = request.POST['code']
+        inputs = request.POST['input']
         run = runcode.RunPyCode(code)
         rescompil, resrun = run.run_py_code()
         if not resrun:
             resrun = 'No result!'
     else:
         code = default_py_code
+        inputs=''
         resrun = 'No result!'
         rescompil = "No compilation for Python"
 
@@ -104,5 +111,6 @@ def runpy(request):
         "resrun": resrun,
         "rescomp": rescompil,
         "rows": default_rows,
-        "cols": default_cols
+        "cols": default_cols,
+        "input":inputs
     })
