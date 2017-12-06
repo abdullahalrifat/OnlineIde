@@ -39,19 +39,19 @@ class ide(generic.ListView):
 
 
 def runc(request):
-    inputs = ''
+
     if request.method == 'POST':
         code = request.POST['code']
-        inputs = request.POST['input']
-        run = runcode.RunCCode(code)
-        rescompil, resrun = run.run_c_code()
+        input = request.POST['input']
+        run = runcode.RunCCode(code,input)
+        rescompil, resrun,input = run.run_c_code()
         if not resrun:
             resrun = 'No result!'
     else:
         code = default_c_code
         resrun = 'No result!'
         rescompil = ''
-        inputs=''
+        input=''
     return render(request, 'main.html', {
         "code": code,
         "target": "runc",
@@ -59,17 +59,17 @@ def runc(request):
         "rescomp": rescompil,
         "rows": default_rows,
         "cols": default_cols,
-        "input":inputs
+        "input":input
     })
 
 
 
 def runcpp(request):
-    inputs=''
+
     if request.method == 'POST':
         code = request.POST['code']
-        inputs = request.POST['input']
-        run = runcode.RunCppCode(code)
+        input = request.POST['input']
+        run = runcode.RunCppCode(code,input)
         rescompil, resrun = run.run_cpp_code()
         if not resrun:
             resrun = 'No result!'
@@ -77,7 +77,7 @@ def runcpp(request):
         code = default_cpp_code
         resrun = 'No result!'
         rescompil = ''
-        inputs=''
+        input=''
     return render(request, 'main.html', {
         "code" :code,
         "target" : "runcpp",
@@ -85,23 +85,23 @@ def runcpp(request):
         "rescomp" : rescompil,
         "rows" : default_rows,
         "cols" :default_cols,
-        "input":inputs
+        "input":input
         })
 
 
 
 def runpy(request):
-    inputs=''
+
     if request.method == 'POST':
         code = request.POST['code']
-        inputs = request.POST['input']
+        input = request.POST['input']
         run = runcode.RunPyCode(code)
         rescompil, resrun = run.run_py_code()
         if not resrun:
             resrun = 'No result!'
     else:
         code = default_py_code
-        inputs=''
+        input=''
         resrun = 'No result!'
         rescompil = "No compilation for Python"
 
@@ -112,5 +112,5 @@ def runpy(request):
         "rescomp": rescompil,
         "rows": default_rows,
         "cols": default_cols,
-        "input":inputs
+        "input":input
     })
