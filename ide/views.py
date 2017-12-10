@@ -44,7 +44,7 @@ def runc(request):
         code = request.POST['code']
         input = request.POST['input']
         run = runcode.RunCCode(code,input)
-        rescompil, resrun,input = run.run_c_code()
+        rescompil, resrun= run.run_c_code()
         if not resrun:
             resrun = 'No result!'
     else:
@@ -95,7 +95,7 @@ def runpy(request):
     if request.method == 'POST':
         code = request.POST['code']
         input = request.POST['input']
-        run = runcode.RunPyCode(code)
+        run = runcode.RunPyCode(code,input)
         rescompil, resrun = run.run_py_code()
         if not resrun:
             resrun = 'No result!'

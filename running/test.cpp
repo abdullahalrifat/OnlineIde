@@ -2,6 +2,8 @@
 using namespace std;
 int main(int argc, char **argv)
 {
-    cout << "Hello C++ World" <<endl;
+    int a;
+    cin>>a;
+    cout<<a+5<<endl;
     return 0;
 }

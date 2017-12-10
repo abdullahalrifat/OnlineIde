@@ -11,20 +11,23 @@ class RunCCode(object):
         if not os.path.exists('running'):
             os.mkdir('running')
 
-    def _compile_c_code(self, filename, fileinput, prog="./running/a.out"):
-        cmd = [self.compiler, filename, fileinput, "-Wall", "-o", prog]
+    def _compile_c_code(self, filename, prog="./running/a.out"):
+        cmd = [self.compiler, filename, "-Wall", "-o", prog]
         p = subprocess.Popen(cmd,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         result = p.wait()
         a, b= p.communicate()
         self.stdout, self.stderr = a.decode("utf-8"), b.decode("utf-8")
         return result
 
-    def _run_c_prog(self, cmd="./running/a.out"):
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE )
-        result = p.wait()
+    def _run_c_prog(self, fileinput,cmd="./running/a.out"):
+        p = subprocess.Popen(cmd,stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE )
+        with open(fileinput, 'r') as content_file:
+            content = content_file.read()
+        p.stdin.write(content.encode("utf-8"))
+        p.stdin.flush()
         a, b = p.communicate()
         self.stdout, self.stderr= a.decode("utf-8"), b.decode("utf-8")
-        return result
+        return p.stdout
 
     def run_c_code(self, code=None,input=None):
         filename = "./running/test.c"
@@ -42,12 +45,12 @@ class RunCCode(object):
         with open(fileinput, "w") as ff:
             ff.write(input)
 
-        res = self._compile_c_code(filename,fileinput)
+        res = self._compile_c_code(filename)
         result_compilation = self.stdout + self.stderr
         if res == 0:
-            self._run_c_prog()
+            self._run_c_prog(fileinput)
             result_run = self.stdout + self.stderr
-        return result_compilation, result_run , input
+        return result_compilation, result_run
 
 
 class RunCppCode(object):
@@ -106,25 +109,34 @@ class RunCppCode(object):
 
 
 class RunPyCode(object):
-    def __init__(self, code=None):
+    def __init__(self, code=None,input=None):
         self.code = code
+        self.input = input
         if not os.path.exists('running'):
             os.mkdir('running')
 
-    def _run_py_prog(self, cmd="a.py"):
+    def _run_py_prog(self, fileinput,cmd="a.py"):
         cmd = [sys.executable, cmd]
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        result = p.wait()
+        p = subprocess.Popen(cmd,shell=True,stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        with open(fileinput, 'r') as content_file:
+            content = content_file.read()
+        p.stdin.write(content.encode("utf-8"))
+        p.stdin.flush()
         a, b = p.communicate()
         self.stdout, self.stderr = a.decode("utf-8"), b.decode("utf-8")
-        return result
+        return p.stdout
 
-    def run_py_code(self, code=None):
+    def run_py_code(self, code=None,input=None):
         filename = "./running/a.py"
+        fileinput = "./running/testcpp.in"
         if not code:
             code = self.code
-
+        if not input:
+            input = self.input
         with open(filename, "w") as f:
             f.write(code)
+        with open(fileinput, "w") as ff:
+            ff.write(input)
+
         self._run_py_prog(filename)
         return self.stderr, self.stdout
