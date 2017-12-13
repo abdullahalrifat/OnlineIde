@@ -1,1 +1,1 @@
-newrelic==n.n.n.n
+newrelic
