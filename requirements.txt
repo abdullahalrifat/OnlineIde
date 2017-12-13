@@ -1,1 +1,3 @@
 newrelic
+gunicorn
+django
