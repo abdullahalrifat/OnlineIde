@@ -25,4 +25,4 @@ newrelic = "==2.98.0.81"
 
 [requires]
 
-python_version = "3.5.2"
+python_version = "3.6"
