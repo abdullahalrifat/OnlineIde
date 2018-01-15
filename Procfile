@@ -1,1 +1,2 @@
-web: newrelic-admin run-program gunicorn {{ OnlineIde }}.wsgi
+
+web: gunicorn OnlineIde:app
