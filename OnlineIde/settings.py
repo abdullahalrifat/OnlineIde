@@ -25,7 +25,8 @@ SECRET_KEY = 'wo6z#$(l_*+8v(31^up87y%=a_w%pvhy4&(h33i#n)t^*0(1f_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['onlineide123.herokuapp.com']
+ALLOWED_HOSTS = ['onlineide123.herokuapp.com', 'sampleide.herokuapp.com']
+
 
 
 # Application definition
