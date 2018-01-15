@@ -1,2 +1,1 @@
-
-web: gunicorn ide:app
+web: gunicorn OnlineIde.wsgi --log-file -
